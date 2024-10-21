@@ -389,6 +389,7 @@ th {
   text-align: inherit; }
 
 label {
+  color:#000000;
   display: inline-block;
   margin-bottom: 0.5rem; }
 
@@ -4057,7 +4058,7 @@ input[type="button"].btn-block {
 
 .media {
   display: flex;
-  align-items: flex-start; }
+  align-items: center; }
 
 .media-body {
   flex: 1; }
@@ -8511,7 +8512,7 @@ svg.pulse-svg {
 
 .notification_dropdown .dropdown-menu-right {
   min-width: 275px;
-  padding: 0rem 0 1rem;
+  padding: 0rem 0 0rem;
   top: 60px; }
   .notification_dropdown .dropdown-menu-right .notification_title {
     background: #593bdb;

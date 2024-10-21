@@ -10,17 +10,22 @@ class Movie extends Model
     protected $table = 'movies';
 
 
-    public function movie_creator()
+    public function movieCreator()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
-    public function movie_updater()
+    public function movieUpdater()
     {
         return $this->belongsTo(User::class, 'updated_by');
     }
-    public function movie_type()
+    public function movieType()
     {
-        return $this->hasMany(MovieType::class, 'movie_type_id');
+        return $this->belongsToMany(Type::class, 'movie_type', 'movie_id', 'type_id');
+    }
+
+    public function movieTypePivot()
+    {
+        return $this->hasMany(MovieType::class, 'movie_id', 'id');
     }
 
 }

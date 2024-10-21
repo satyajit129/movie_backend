@@ -1,10 +1,10 @@
 <script src="{{ asset('backend/vendor/global/global.min.js') }}"></script>
 <script src="{{ asset('backend/js/quixnav-init.js') }}"></script>
 <script src="{{ asset('backend/js/custom.min.js') }}"></script>
-{{-- <script src="{{ asset('backend/vendor/chartist/js/chartist.min.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="{{ asset('backend/vendor/moment/moment.min.js') }}"></script>
 <script src="{{ asset('backend/vendor/pg-calendar/js/pignose.calendar.min.js') }}"></script>
-<script src="{{ asset('backend/js/dashboard/dashboard-2.js') }}"></script>
+{{-- <script src="{{ asset('backend/js/dashboard/dashboard-2.js') }}"></script> --}}
 <script src="{{ asset('backend/vendor/select2/js/select2.full.min.js') }}"></script>
 <script src="{{ asset('backend/js/plugins-init/select2-init.js') }}"></script>
 <script src="{{ asset('backend/vendor/nestable2/js/jquery.nestable.min.js') }}"></script>
@@ -38,5 +38,7 @@
 <script src="{{ asset('backend/js/plugins-init/jquery.validate-init.js ') }}"></script>
 <script src="{{ asset('backend/vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('backend/js/plugins-init/datatables.init.js') }}"></script>
+
+
 
     

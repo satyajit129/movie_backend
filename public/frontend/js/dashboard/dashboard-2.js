@@ -21,7 +21,6 @@
                     className: "bg-google-plus"
                 }
             ]
-            //        colors: ["#333", "#222", "#111"]
     };
 
     var options = {

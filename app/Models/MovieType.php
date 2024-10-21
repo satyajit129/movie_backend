@@ -6,19 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class MovieType extends Model
 {
+    protected $table = 'movie_type';
     protected $guarded = [];
-    protected $table = 'movie_types';
 
-    // Relationship to the creator
-    public function creator()
+
+    public function movies()
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->hasMany(Movie::class);
     }
-
-    // Relationship to the updater
-    public function updater()
+    public function types()
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->hasMany(Type::class);
     }
-
 }

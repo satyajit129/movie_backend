@@ -5,9 +5,7 @@
 Sweet-alert JS
 *******************/
 
-    document.querySelector(".sweet-wrong").onclick = function () {
-        sweetAlert("Oops...", "Something went wrong !!", "error")
-    }, document.querySelector(".sweet-message").onclick = function () {
+    document.querySelector(".sweet-message").onclick = function () {
         swal("Hey, Here's a Logout message !!")
     }, document.querySelector(".sweet-text").onclick = function () {
         swal("Hey, Here's a message !!", "It's pretty, isn't it?")

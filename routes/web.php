@@ -15,10 +15,10 @@ Route::group(['guard' => 'web', 'prefix' => 'admin', 'middleware' => RedirectIfN
     Route::get('/logout', [AdminAuthController::class, 'adminLogout'])->name('adminLogout');
     Route::get('/dashboard', [AdminDashboardController::class, 'adminDashboard'])->name('adminDashboard');
 
-    Route::group(['prefix' => 'movie-type'], function () {
-        Route::get('/list', [MovieTypeController::class, 'movieTypeList'])->name('movieTypeList');
-        Route::get('/create-or-update/{id?}', [MovieTypeController::class, 'movieTypeCreateorUpdate'])->name('movieTypeCreateorUpdate');
-        Route::post('/save/{id?}', [MovieTypeController::class, 'movieTypeSave'])->name('movieTypeSave');
+    Route::group(['prefix' => 'type'], function () {
+        Route::get('/list', [TypeController::class, 'typeList'])->name('typeList');
+        Route::get('/create-or-update/{id?}', [TypeController::class, 'typeCreateorUpdate'])->name('typeCreateorUpdate');
+        Route::post('/save/{id?}', [TypeController::class, 'typeSave'])->name('typeSave');
     });
     Route::group(['prefix' => 'movie'], function () {
         Route::get('/list', [MovieController::class, 'movieList'])->name('movieList');

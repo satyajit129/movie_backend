@@ -22,59 +22,28 @@
                             <div class="pulse-css"></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            @php
+                                $notifications = DB::table('notifications')->latest()->paginate(10);
+                            @endphp
                             <ul class="list-unstyled">
-                                <li class="media dropdown-item">
-                                    <span class="success"><i class="ti-user"></i></span>
-                                    <div class="media-body">
-                                        <a href="#">
-                                            <p><strong>Martin</strong> has added a <strong>customer</strong> Successfully
-                                            </p>
-                                        </a>
-                                    </div>
-                                    <span class="notify-time">3:20 am</span>
-                                </li>
-                                <li class="media dropdown-item">
-                                    <span class="primary"><i class="ti-shopping-cart"></i></span>
-                                    <div class="media-body">
-                                        <a href="#">
-                                            <p><strong>Jennifer</strong> purchased Light Dashboard 2.0.</p>
-                                        </a>
-                                    </div>
-                                    <span class="notify-time">3:20 am</span>
-                                </li>
-                                <li class="media dropdown-item">
-                                    <span class="danger"><i class="ti-bookmark"></i></span>
-                                    <div class="media-body">
-                                        <a href="#">
-                                            <p><strong>Robin</strong> marked a <strong>ticket</strong> as unsolved.
-                                            </p>
-                                        </a>
-                                    </div>
-                                    <span class="notify-time">3:20 am</span>
-                                </li>
-                                <li class="media dropdown-item">
-                                    <span class="primary"><i class="ti-heart"></i></span>
-                                    <div class="media-body">
-                                        <a href="#">
-                                            <p><strong>David</strong> purchased Light Dashboard 1.0.</p>
-                                        </a>
-                                    </div>
-                                    <span class="notify-time">3:20 am</span>
-                                </li>
-                                <li class="media dropdown-item">
-                                    <span class="success"><i class="ti-image"></i></span>
-                                    <div class="media-body">
-                                        <a href="#">
-                                            <p><strong> James.</strong> has added a<strong>customer</strong> Successfully
-                                            </p>
-                                        </a>
-                                    </div>
-                                    <span class="notify-time">3:20 am</span>
-                                </li>
+                                @foreach ($notifications as $notification)
+                                    @php
+                                        $data = json_decode($notification->data, true);
+                                    @endphp
+                                    <li class="media dropdown-item">
+                                        <span class="success"><i class="ti-user"></i></span>
+                                        <div class="media-body">
+                                            <p><a href="{{ $data['url'] }}">{{ $data['message'] }}</a></p>
+                                        </div>
+                                        <span class="notify-time">{{ $notification->created_at ? \Carbon\Carbon::parse($notification->created_at)->diffForHumans() : 'N/A' }}</span>
+                                    </li>
+                                @endforeach
+                                <div class="pagination-wrapper">
+                                    {{ $notifications->links() }}
+                                </div>
                             </ul>
-                            <a class="all-notification" href="#">See all notifications <i
-                                    class="ti-arrow-right"></i></a>
                         </div>
+                        
                     </li>
                     <li class="nav-item dropdown header-profile">
                         <a class="nav-link" href="#" role="button" data-toggle="dropdown">
@@ -89,10 +58,10 @@
                                 <i class="icon-envelope-open"></i>
                                 <span class="ml-2">Inbox </span>
                             </a>
-                            <a href="{{ route('adminLogout') }}" class="dropdown-item sweet-confirm" >
+                            <a href="{{ route('adminLogout') }}" class="dropdown-item sweet-confirm">
                                 <i class="icon-key"></i>
                                 <span class="ml-2">Logout</span>
-                            </a>                                                                                
+                            </a>
                         </div>
                     </li>
                 </ul>

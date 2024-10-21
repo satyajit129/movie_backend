@@ -6,19 +6,7 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="row page-titles mx-0">
-        <div class="col-sm-6 p-md-0">
-            <div class="welcome-text">
-                <h4>Hi, {{ Auth::user()->name }}</h4>
-            </div>
-        </div>
-        <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Table</a></li>
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Datatable</a></li>
-            </ol>
-        </div>
-    </div>
+    @include('backend.global.get_greetings')
     <!-- row -->
 
 
@@ -32,19 +20,32 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example2"  style="width:100%">
+                        <table class="table table-bordered verticle-middle table-responsive-sm" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>SL</th>
+                                    <th>Image</th>
                                     <th>Name</th>
+                
                                     <th>Created By</th>
                                     <th>Updated By</th>
                                     <th>Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($movies as $movie)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td><img src="{{ asset('uploads/'. $movie->thumb_image) }}" alt="{{ $movie->thumb_image }}" width="100" ></td>
+                                    <td>{{ $movie->name }}</td>
+                                    <td>{{ $movie->movieCreator->name ?? 'Unknown' }}</td>
+                                    <td>{{ $movie->movieUpdater->name ?? 'Unknown' }}</td>
+                                    <td><a class="btn btn-sm btn-outline-info" href="{{ route('movieCreateorUpdate', $movie->id) }}"><i class="fa fa-pencil color-muted"></i></a></td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
+                        {{ $movies->links() }}
                     </div>
                 </div>
             </div>
