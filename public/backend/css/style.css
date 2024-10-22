@@ -8511,9 +8511,12 @@ svg.pulse-svg {
     padding: 5px 24px; }
 
 .notification_dropdown .dropdown-menu-right {
+  max-height: 60vh;
   min-width: 275px;
   padding: 0rem 0 0rem;
-  top: 60px; }
+  top: 60px;
+  overflow-y: scroll;
+}
   .notification_dropdown .dropdown-menu-right .notification_title {
     background: #593bdb;
     color: #fff;

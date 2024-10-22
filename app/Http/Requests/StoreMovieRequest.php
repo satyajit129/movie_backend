@@ -23,6 +23,7 @@ class StoreMovieRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'slug' => 'required',
             'types' => 'required',
             'description' => 'required',
             'release_date' => 'nullable',

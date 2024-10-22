@@ -24,6 +24,13 @@
                     <span class="nav-text">Movies</span>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('sliderList') }}" aria-expanded="false" class="{{ request()->routeIs('sliderList') }}">
+                    <i class="icon icon-app-store "></i>
+                    <span class="nav-text">Sliders</span>
+                </a>
+            </li>
         </ul>
     </div>
 </div>

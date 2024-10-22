@@ -10,12 +10,16 @@ class MovieType extends Model
     protected $guarded = [];
 
 
-    public function movies()
-    {
-        return $this->hasMany(Movie::class);
-    }
+    // public function movies()
+    // {
+    //     return $this->hasMany(Movie::class);
+    // }
     public function types()
     {
         return $this->hasMany(Type::class);
+    }
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class);
     }
 }

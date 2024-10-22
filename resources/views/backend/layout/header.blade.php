@@ -23,7 +23,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             @php
-                                $notifications = DB::table('notifications')->latest()->paginate(10);
+                                $notifications = DB::table('notifications')->latest()->get();
                             @endphp
                             <ul class="list-unstyled">
                                 @foreach ($notifications as $notification)
@@ -38,9 +38,6 @@
                                         <span class="notify-time">{{ $notification->created_at ? \Carbon\Carbon::parse($notification->created_at)->diffForHumans() : 'N/A' }}</span>
                                     </li>
                                 @endforeach
-                                <div class="pagination-wrapper">
-                                    {{ $notifications->links() }}
-                                </div>
                             </ul>
                         </div>
                         

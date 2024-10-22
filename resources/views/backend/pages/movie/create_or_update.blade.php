@@ -38,9 +38,17 @@
                             <div class="basic-form">
                                 <div class="form-group">
                                     <label for="name">Movie Name</label>
-                                    <input type="text" class="form-control" name="name"
+                                    <input type="text" class="form-control" name="name" id="movie-name"
                                         value="{{ old('name', isset($movie) ? $movie->name : '') }}"
                                         placeholder="Enter movie name" required>
+                                </div>
+                            </div>
+                            <div class="basic-form">
+                                <div class="form-group">
+                                    <label for="slug">Slug</label>
+                                    <input type="text" class="form-control" id="movie-slug" name="slug"
+                                        value="{{ old('slug', isset($movie) ? $movie->slug : '') }}"
+                                        placeholder="Enter movie Slug" required readonly>
                                 </div>
                             </div>
                             <div class="basic-form">
@@ -78,15 +86,15 @@
                                     <label for="movie-duration">Movie Duration</label>
                                     <div class="d-flex">
                                         <input type="number" class="form-control mx-1" name="hours" placeholder="Hour" min="0" max="23"
-                                            value="{{ old('hours', isset($movie) ? explode(':', $movie->duration)[0] : 0) }}">
+                                            value="{{ old('hours', isset($movie) ? explode(':', $movie->duration)[0] : '') }}">
                                         
                                         <span class="mx-1">:</span>
                                         <input type="number" class="form-control mx-1" name="minutes" placeholder="Minute" min="0" max="59"
-                                            value="{{ old('minutes', isset($movie) ? explode(':', $movie->duration)[1] : 0) }}">
+                                            value="{{ old('minutes', isset($movie) ? explode(':', $movie->duration)[1] : '') }}">
                                         
                                         <span class="mx-1">:</span>
                                         <input type="number" class="form-control mx-1" name="seconds" placeholder="Second" min="0" max="59"
-                                            value="{{ old('seconds', isset($movie) ? explode(':', $movie->duration)[2] : 0) }}">
+                                            value="{{ old('seconds', isset($movie) ? explode(':', $movie->duration)[2] : '') }}">
                                     </div>
                                 </div>
                             </div>                            
@@ -103,7 +111,7 @@
                                         <span class="badge badge-rounded badge-outline-danger">Casts Names should be
                                             separated by Comma</span>
                                     </label>
-                                    <textarea class="form-control" rows="4" name="casting"> {{ old('casting', isset($movie) ? $movie->casting : '') }}</textarea>
+                                    <textarea class="form-control" rows="3" id="casting" name="casting" placeholder="Enter movie casts">{{ old('casting', isset($movie) ? $movie->casting : '') }}</textarea>
                                 </div>
                             </div>
                             <div class="basic-form">
@@ -193,5 +201,33 @@
 @endsection
 
 @section('custom_scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#movie-name').on('input', function() {
+            var movieName = $(this).val();
 
+            console.log(movieName);
+
+            if (movieName.length > 0) {
+                $.ajax({
+                    url: "{{ route('generateSlug') }}",
+                    type: "POST",
+                    data: {
+                        name: movieName,
+                        _token: "{{ csrf_token() }}" 
+                    },
+                    success: function(response) {
+                        $('#movie-slug').val(response.slug);
+                    },
+                    error: function(xhr) {
+                        console.error('Slug generation failed');
+                    }
+                });
+            }else{
+                $('#movie-slug').val('');
+            }
+        });
+    });
+</script>
 @endsection

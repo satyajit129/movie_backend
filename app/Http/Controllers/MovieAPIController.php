@@ -11,17 +11,13 @@ class MovieAPIController extends Controller
     public function moviesList(Request $request)
     {
         $query = Movie::with(['movieCreator', 'movieUpdater']);
-
         if ($request->has('trending') && $request->trending === 'true') {
             $query->where('is_trending', true);
         }
-
         if ($request->has('top_rated') && $request->top_rated === 'true') {
             $query->where('rating', '>=', 4);
         }
-
         $movies = $query->get()->map(function ($movie) {
-            // Generate full URLs for the thumbnail and slider images
             $movie->thumb_image_url = $movie->thumb_image ? asset('uploads/' . $movie->thumb_image) : null;
             $movie->slider_image_url = $movie->slider_image ? asset('uploads/' . $movie->slider_image) : null;
             return $movie;
@@ -30,27 +26,27 @@ class MovieAPIController extends Controller
     }
 
     public function movieDetails($id)
-{
-    // Fetch the movie with related data
-    $movie = Movie::with(['movieCreator', 'movieUpdater'])->findOrFail($id);
-
-    // Generate URLs for the images
-    $movie->thumb_image_url = $movie->thumb_image ? asset('uploads/' . $movie->thumb_image) : null;
-    $movie->slider_image_url = $movie->slider_image ? asset('uploads/' . $movie->slider_image) : null;
-
-    // Get the type ids related to the movie
-    $typeid = $movie->movieTypePivot->pluck('type_id');
-
-    // Fetch type names based on the type ids
-    $typeNames = Type::whereIn('id', $typeid)->pluck('name')->toArray(); // Convert to array
-
-    $movie->type_names = $typeNames;
-
-    // Prepare the response data
-    return response()->json([
-        'movie' => $movie, 
-    ]);
-}
-
+    {
+        $movie = Movie::with(['movieCreator', 'movieUpdater', 'movieTypePivot'])->findOrFail($id);
+        $movie->thumb_image_url = $movie->thumb_image ? asset('uploads/' . $movie->thumb_image) : null;
+        $movie->slider_image_url = $movie->slider_image ? asset('uploads/' . $movie->slider_image) : null;
+        $typeid = $movie->movieTypePivot->pluck('type_id');
+        $typeNames = Type::whereIn('id', $typeid)->pluck('name')->toArray(); // Convert to array
+        $movie->type_names = $typeNames;
+        $relatedMovies = Movie::whereHas('movieTypePivot', function ($query) use ($typeid) {
+            $query->whereIn('type_id', $typeid);
+        })
+        ->where('id', '!=', $id)
+        ->take(5)
+        ->get();
+        $relatedMovies->each(function ($relatedMovie) {
+            $relatedMovie->thumb_image_url = $relatedMovie->thumb_image ? asset('uploads/' . $relatedMovie->thumb_image) : null;
+            $relatedMovie->slider_image_url = $relatedMovie->slider_image ? asset('uploads/' . $relatedMovie->slider_image) : null;
+        });
+        return response()->json([
+            'movie' => $movie,
+            'related_movies' => $relatedMovies,
+        ]);
+    }
 
 }
