@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Models\Settings;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class Utilities
 {
     public static function getGreeting()
     {
         $hour = Carbon::now()->format('H');
+        Log::info($hour);
         $greeting = '';
 
         if ($hour >= 5 && $hour < 12) {
@@ -21,5 +24,10 @@ class Utilities
             $greeting = 'Good Night';
         }
         return $greeting;
+    }
+    public static function getSettingsData()
+    {
+        $settings = Settings::first();
+        return $settings;
     }
 }

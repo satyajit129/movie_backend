@@ -36,9 +36,9 @@ class MovieAPIController extends Controller
         $relatedMovies = Movie::whereHas('movieTypePivot', function ($query) use ($typeid) {
             $query->whereIn('type_id', $typeid);
         })
-        ->where('id', '!=', $id)
-        ->take(5)
-        ->get();
+            ->where('id', '!=', $id)
+            ->take(5)
+            ->get();
         $relatedMovies->each(function ($relatedMovie) {
             $relatedMovie->thumb_image_url = $relatedMovie->thumb_image ? asset('uploads/' . $relatedMovie->thumb_image) : null;
             $relatedMovie->slider_image_url = $relatedMovie->slider_image ? asset('uploads/' . $relatedMovie->slider_image) : null;
@@ -48,5 +48,34 @@ class MovieAPIController extends Controller
             'related_movies' => $relatedMovies,
         ]);
     }
+
+    public function sliderImage()
+    {
+        $movie_sliders = Movie::where('slider_image', '!=', null)
+            ->latest()
+            ->take(10)
+            ->get()
+            ->map(function ($movie) {
+                $movie->thumb_image_url = $movie->thumb_image ? asset('uploads/' . $movie->thumb_image) : null;
+                $movie->slider_image_url = $movie->slider_image ? asset('uploads/' . $movie->slider_image) : null;
+                return $movie;
+            });
+        return response()->json($movie_sliders);
+    }
+
+    public function searchMovies($searchInput)
+    {
+        // return 'okk';
+        $query = Movie::query();
+        $query->where('name', 'like', '%' . $searchInput . '%');
+        
+        $movies = $query->get()->map(function ($movie) {
+            $movie->thumb_image_url = $movie->thumb_image ? asset('uploads/' . $movie->thumb_image) : null;
+            $movie->slider_image_url = $movie->slider_image ? asset('uploads/' . $movie->slider_image) : null;
+            return $movie;
+        });
+        return response()->json($movies);
+    }
+
 
 }

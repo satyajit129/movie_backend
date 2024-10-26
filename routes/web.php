@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\RedirectIfNotAuthenticated;
 use Illuminate\Support\Facades\Route;
-use PHPUnit\Framework\Attributes\Group;
 
 Route::get('admin/auth',[AdminAuthController::class,'adminAuth'])->name('adminAuth')->middleware(RedirectIfAuthenticated::class);
 Route::post('admin/auth/login-request',[AdminAuthController::class,'adminLoginRequest'])->name('adminLoginRequest');
@@ -26,9 +25,13 @@ Route::group(['guard' => 'web', 'prefix' => 'admin', 'middleware' => RedirectIfN
         Route::post('generate-slug', [MovieController::class, 'generateSlug'])->name('generateSlug');
     });
 
-    Route::group(['prefix' => 'slider'], function () {
-        Route::get('/list', [SliderController::class, 'sliderList'])->name('sliderList');
-        Route::get('/create-or-update/{id?}', [SliderController::class, 'sliderCreateorUpdate'])->name('sliderCreateorUpdate');
-        Route::post('/save/{id?}', [SliderController::class, 'sliderSave'])->name('sliderSave');
-    });
+    Route::get('/settings', [SettingsController::class, 'settings'])->name('settings');
+    Route::post('/settings-save/{id}', [SettingsController::class, 'settingsSave'])->name('settingsSave');
+
 });
+
+Route::get('/test', function () {
+    return view('welcome');
+});
+Route::get('/send-request',[TestController::class,'sendLeaveRequest'])->name('sendLeaveRequest');
+Route::post('/upload-attachment',[TestController::class,'uploadAttachment'])->name('uploadAttachment');

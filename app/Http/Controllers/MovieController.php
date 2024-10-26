@@ -100,7 +100,7 @@ class MovieController extends Controller
     }
     public function generateSlug(Request $request)
     {
-        $slug = Str::slug($request->name); // Generate slug from movie name
+        $slug = Str::slug($request->name);
         return response()->json(['slug' => $slug]);
     }
 

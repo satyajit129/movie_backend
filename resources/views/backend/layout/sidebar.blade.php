@@ -24,11 +24,11 @@
                     <span class="nav-text">Movies</span>
                 </a>
             </li>
-
             <li>
-                <a href="{{ route('sliderList') }}" aria-expanded="false" class="{{ request()->routeIs('sliderList') }}">
+                <a href="{{ route('settings') }}" aria-expanded="false"
+                    class="{{ request()->routeIs('settings') ? 'active' : '' }}">
                     <i class="icon icon-app-store "></i>
-                    <span class="nav-text">Sliders</span>
+                    <span class="nav-text">Settings</span>
                 </a>
             </li>
         </ul>

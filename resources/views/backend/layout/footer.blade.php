@@ -1,5 +1,5 @@
 <div class="footer">
     <div class="copyright">
-        <p>Copyright © Designed &amp; Developed by Sayajit Roy</p>
+        <p>Copyright © Designed &amp; Developed by Satyajit Roy</p>
     </div>
 </div>
