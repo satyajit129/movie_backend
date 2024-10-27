@@ -25,6 +25,13 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('adminUserList') }}" aria-expanded="false"
+                    class="{{ request()->routeIs('adminUserList', 'adminUserCreateorUpdate') ? 'active' : '' }}">
+                    <i class="icon icon-app-store "></i>
+                    <span class="nav-text">Users</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('settings') }}" aria-expanded="false"
                     class="{{ request()->routeIs('settings') ? 'active' : '' }}">
                     <i class="icon icon-app-store "></i>
